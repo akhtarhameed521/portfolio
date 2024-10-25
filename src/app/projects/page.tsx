@@ -89,7 +89,7 @@ export default function Page() {
                   transition={{ duration: 0.5 }}
                 >
                   <Image
-                    src="/img/p1.png"
+                    src="/img/project1.png"
                     width={500}
                     height={500}
                     alt="project image"
