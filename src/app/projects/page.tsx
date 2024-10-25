@@ -15,11 +15,11 @@ import SectionHeader from "@/components/layout/SectionHeader";
 
 // Dummy image data for the gallery
 const images = [
-  "/img/p1.png",
-  "/img/p2.png",
-  "/img/p3.png",
-  "/img/p4.png",
-  "/img/p5.png",
+  "/img/project1.png",
+  "/img/project2.png",
+  "/img/project3.png",
+  "/img/project4.png",
+  "/img/project5.png",
 ];
 
 const sliderVariants = {
@@ -125,7 +125,7 @@ export default function Page() {
                   transition={{ duration: 0.5 }}
                 >
                   <Image
-                    src="/img/p1.png"
+                    src="/img/project1.png"
                     width={500}
                     height={500}
                     alt="project image"
