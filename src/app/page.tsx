@@ -44,7 +44,7 @@ export default function Home() {
             <div className="w-fit">
               <ProfileImage />
             </div>
-            <div className="flex flex-col justify-center  items-center lg:items-baseline lg:h-auto">
+            <div className="flex flex-col justify-center  items-center lg:items-baseline lg:h-auto pb-10 sm:pb-10 md:pb-10 lg:pb-0 ">
               <h1 className="text-[50px] font-bold">Akhtar Hameed</h1>
               <hr className="h-2 w-28 bg-black rounded-lg" />
               

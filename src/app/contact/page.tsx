@@ -8,11 +8,11 @@ import SectionHeader from "@/components/layout/SectionHeader";
 
 export default function Page() {
   return (
-    <div className="flex gap-10 mt-5  font-serif h-[80vh] overflow-auto bg-slate-100 pr-5">
+    <div className="flex gap-0 sm:gap-0 md:gap-0 lg:gap-10 p-5 sm:p-5 md:p-5 lg:p-0   mt-5  font-serif h-[80vh] overflow-y-auto bg-slate-100  ">
         <div>
             <ProfileImage/>
         </div>
-      <div className="w-full lg:w-3/4 mt-5  ">
+      <div className="w-full lg:w-3/4 mt-5 pr-5 ">
         <SectionHeader title="Contact" />
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">
           Get in Touch
