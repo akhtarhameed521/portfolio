@@ -51,7 +51,7 @@ export default function Page() {
 
   return (
     <>
-      <div className="flex gap-10 mt-5 font-serif h-auto bg-slate-100 pr-5 overflow-hidden ">
+      <div className="flex gap-10 pl-10 mt-5 font-serif h-auto bg-slate-100 pr-5 overflow-hidden ">
         {/* Profile Image */}
         <div>
           <ProfileImage />

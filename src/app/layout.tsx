@@ -31,6 +31,24 @@ export default function RootLayout({
   const pathname = usePathname(); 
   const [isAnimating, setIsAnimating] = useState(true);
 
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Capture mouse movements
+  useEffect(() => {
+    const handleMouseMove = (event: MouseEvent) => {
+      const { clientX, clientY } = event;
+      setMousePosition({
+        x: clientX,
+        y: clientY,
+      });
+    };
+    
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => {
+      window.removeEventListener("mousemove", handleMouseMove);
+    };
+  }, []);
+
   // Trigger the animation when the route changes
   useEffect(() => {
     setIsAnimating(true);
@@ -39,20 +57,36 @@ export default function RootLayout({
     return () => clearTimeout(timeout); 
   }, [pathname]);
 
-  
-
   return (
     <html lang="en">
-       
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-white custom-scrollbar`}
       >
         <div className="w-full h-[100vh] relative overflow-hidden">
-          
           <AnimatePresence mode="wait">
             {isAnimating && <SinglePageTransition key="page-transition" />}
           </AnimatePresence>
 
+          {/* Camera Effect Background */}
+          <motion.div
+            className="fixed top-0 left-0 w-full h-full bg-gradient-to-r from-blue-500 to-purple-700 z-[-1]"
+            initial={{ scale: 1 }}
+            animate={{
+              scale: 1.05,
+              rotate: 10,
+              rotateX: (mousePosition.y - window.innerHeight / 2) / 50,
+              rotateY: (mousePosition.x - window.innerWidth / 2) / 50,
+            }}
+            exit={{ scale: 1 }}
+            transition={{
+              duration: 0.5,
+              ease: "easeInOut",
+            }}
+            style={{
+              transformStyle: "preserve-3d",
+              perspective: "1500px",
+            }}
+          />
           
           {!isAnimating && (
             <motion.div
@@ -62,7 +96,13 @@ export default function RootLayout({
               exit={{ opacity: 0, y: 50 }}
               transition={{ duration: 0.6, ease: "easeInOut" }}
             >
-              <div className="max-w-7xl m-auto p-5">
+              <div
+                className="max-w-7xl m-auto p-5"
+                style={{
+                  transform: `rotateX(${(mousePosition.y - window.innerHeight / 2) / 30}deg) 
+                              rotateY(${(mousePosition.x - window.innerWidth / 2) / 30}deg)`
+                }}
+              >
                 <Navbar />
                 {children}
               </div>
