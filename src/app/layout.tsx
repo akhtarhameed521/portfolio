@@ -28,10 +28,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const pathname = usePathname(); 
+  const pathname = usePathname();
   const [isAnimating, setIsAnimating] = useState(true);
 
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [isClient, setIsClient] = useState(false); // Added client state
+
+  // Check if running in the client-side (after initial render)
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Capture mouse movements
   useEffect(() => {
@@ -42,11 +48,13 @@ export default function RootLayout({
         y: clientY,
       });
     };
-    
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-    };
+
+    if (typeof window !== "undefined") {
+      window.addEventListener("mousemove", handleMouseMove);
+      return () => {
+        window.removeEventListener("mousemove", handleMouseMove);
+      };
+    }
   }, []);
 
   // Trigger the animation when the route changes
@@ -54,8 +62,10 @@ export default function RootLayout({
     setIsAnimating(true);
     const timeout = setTimeout(() => setIsAnimating(false), 1000); // Animation duration
 
-    return () => clearTimeout(timeout); 
+    return () => clearTimeout(timeout);
   }, [pathname]);
+
+  if (!isClient) return null; // Prevent rendering until we are in the client
 
   return (
     <html lang="en">
@@ -87,7 +97,7 @@ export default function RootLayout({
               perspective: "1500px",
             }}
           />
-          
+
           {!isAnimating && (
             <motion.div
               key={pathname}
@@ -100,7 +110,7 @@ export default function RootLayout({
                 className="max-w-7xl m-auto p-5"
                 style={{
                   transform: `rotateX(${(mousePosition.y - window.innerHeight / 2) / 30}deg) 
-                              rotateY(${(mousePosition.x - window.innerWidth / 2) / 30}deg)`
+                              rotateY(${(mousePosition.x - window.innerWidth / 2) / 30}deg)`,
                 }}
               >
                 <Navbar />
